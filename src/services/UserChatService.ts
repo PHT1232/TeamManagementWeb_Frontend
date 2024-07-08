@@ -23,6 +23,11 @@ export class UserChatService {
         });
     }
 
+    getRecentChatUser(userId: string) {
+        let localUrl = userChatServiceUrl + "/GetRecentChatUser?userId=" + userId;
+        return this.http.get<UserDisplay[]>(localUrl); 
+    }
+
     sendMessages(chatMessage: ChatMessageModel) {
         let localUrl = userChatServiceUrl + '/SendMessage';
         return this.http.post(localUrl, chatMessage);

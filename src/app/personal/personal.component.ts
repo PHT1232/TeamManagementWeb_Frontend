@@ -13,6 +13,7 @@ export class PersonalComponent implements OnInit {
   tooltipItems!: MenuItem[];
   loading = false;
   users: UserDisplay[] = [];
+  currentUser!: string | null;
 
   value: string = '';
 
@@ -23,6 +24,7 @@ export class PersonalComponent implements OnInit {
   constructor(private userChatService: UserChatService) {}
 
   ngOnInit(): void {
+
     this.tooltipItems = [
       {
           tooltipOptions: {
@@ -42,6 +44,20 @@ export class PersonalComponent implements OnInit {
       },
     ];
 
+
+    this.currentUser = localStorage.getItem('userId');
+    if (this.currentUser !== null) {
+      this.userChatService.getRecentChatUser(this.currentUser).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.users = data;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        }
+      })
+    }
   }
 
   async change(event: Event) {
@@ -51,6 +67,9 @@ export class PersonalComponent implements OnInit {
         next: (data) => {
           console.log(data);
           this.users = data;          
+          this.loading = false;
+        },
+        error: () => {
           this.loading = false;
         }
       })

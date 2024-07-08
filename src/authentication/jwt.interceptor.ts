@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { AuthenticationService } from "src/services/AuthenticationService";
 import { environment } from "src/shared/environment";
 
-const apiUrl = 'https://192.168.1.12:7279/api/'
+const apiUrl = 'https://192.168.1.3:7279/api/'
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenService: AuthenticationService) {}

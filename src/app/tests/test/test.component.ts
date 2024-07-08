@@ -25,7 +25,7 @@ export class TestComponent implements OnInit {
   }
 
   // private startHttpRequest = () => {
-  //   this.http.get<Chat>('https://192.168.1.12:7279/api/chat/Get')
+  //   this.http.get<Chat>('https://192.168.1.3:7279/api/chat/Get')
   //     .subscribe(res => {
   //       console.log(res.chatMessage);
   //     })
