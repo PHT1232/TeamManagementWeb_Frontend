@@ -47,10 +47,10 @@ export class PersonalComponent implements OnInit {
 
     this.currentUser = localStorage.getItem('userId');
     if (this.currentUser !== null) {
-      this.userChatService.getRecentChatUser(this.currentUser).subscribe({
+      this.userChatService.getRecentChatUser(this.currentUser, 1).subscribe({
         next: (data) => {
           console.log(data);
-          this.users = data;
+          this.users = data.users;
           this.loading = false;
         },
         error: () => {
