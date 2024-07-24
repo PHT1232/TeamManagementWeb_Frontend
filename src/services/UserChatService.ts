@@ -5,6 +5,7 @@ import { UserDisplay } from "./models/Users/UserDisplay";
 import { SkipLoading } from "./LoadingInterceptor";
 import { ChatMessageModel } from "./models/ChatModels/ChatMessageModel";
 import { UserDisplayPagination } from "./models/Users/UserDisplayPagination";
+import { ChatMessageDisplayPagination } from "./models/ChatModels/ChatMessageDisplayPagination";
 
 const userChatServiceUrl = environment.baseUrl + '/user/chat'
 @Injectable({
@@ -27,6 +28,11 @@ export class UserChatService {
     getRecentChatUser(userId: string, lastChatSessionId: number) {
         let localUrl = userChatServiceUrl + "/GetRecentChatUser?userId=" + userId + "&lastChatSessionId=" + lastChatSessionId;
         return this.http.get<UserDisplayPagination>(localUrl); 
+    }
+
+    getRecentChatMessage(chatSessionId: number, lastMessageSentDate: Date) {
+        let localUrl = userChatServiceUrl + "/GetRecentChatMessage?chatSessionId=" + chatSessionId + "&lastMessageSentDate=" + lastMessageSentDate;
+        return this.http.get<ChatMessageDisplayPagination>(localUrl);
     }
 
     sendMessages(chatMessage: ChatMessageModel) {

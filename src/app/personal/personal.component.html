@@ -33,11 +33,11 @@
             </div>
         </div>
         <div *ngFor="let user of users">
-            <div class="teamrow row" (click)="clickUser(user.userId)">
+            <div class="teamrow row" (click)="clickUser(user.userId, user.chatSessionId)">
                 <div class="col-sm-4">
                     <!-- <div class="letterblock">
                     </div> -->
-                    <img [src]="'https://192.168.1.3:7279/api/file/GetUserProfile?user=' + user.userId + '&fileName=' + user.userProfile" class="avatar" />
+                    <img [src]="'https://192.168.1.14:7279/api/file/GetUserProfile?user=' + user.userId + '&fileName=' + user.userProfile" class="avatar" />
                     <!-- <img src="" alt=""> -->
                 </div>
                 <div class="col-sm-8" style="margin-top: 20px;">
@@ -47,5 +47,5 @@
         </div>
     </div>
     <div class="rightpanel col-10">
-        <app-chat [selectedUser]="userSeleted"></app-chat>
+        <app-chat [selectedUser]="userSeleted" [selectedSession]="chatSessionSelected"></app-chat>
     </div>

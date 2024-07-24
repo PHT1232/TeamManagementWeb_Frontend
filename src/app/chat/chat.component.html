@@ -3,11 +3,13 @@
       <div class="pic stark" style="display: inline-block;"></div>
       <h2 style="position: relative; bottom: 50px; margin-left:  80px;">Tony stark</h2>
     </div>
-    <div class="messages" id="chat">
+    <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
       <div class="time">
-        Today at 11:41
+        {{ chat.createdDate }}
+        <!-- Today at 11:41 -->
       </div>
       <div class="message parker">
+        {{ chat.chatMessage }}
         Hey, man! What's up, Mr Stark? 👋
       </div>
       <div class="message stark">
@@ -15,81 +17,6 @@
       </div>
       <div class="message parker">
         Field trip!
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? &#128512;
-      </div>
-      <div class="message stark">
-        {{selectedUser}}
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
-      </div>
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>              
-      <div class="message stark">
-        Uh, he's from space, he came here to steal a necklace from a wizard.
-      </div>
-      <div class="message parker">
-        Uh, what is this guy's problem, Mr. Stark? 🤔
       </div>
       <div class="message stark">
         <div class="typing typing-1"></div>

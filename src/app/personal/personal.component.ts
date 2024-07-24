@@ -17,7 +17,8 @@ export class PersonalComponent implements OnInit {
 
   value: string = '';
 
-  userSeleted:string = "this is for child from parent!!!";
+  userSeleted: string = "this is for child from parent!!!";
+  chatSessionSelected: number = 0;
 
   @ViewChild('searchInput') searchInput!: ElementRef;
 
@@ -47,7 +48,7 @@ export class PersonalComponent implements OnInit {
 
     this.currentUser = localStorage.getItem('userId');
     if (this.currentUser !== null) {
-      this.userChatService.getRecentChatUser(this.currentUser, 1).subscribe({
+      this.userChatService.getRecentChatUser(this.currentUser, 0).subscribe({
         next: (data) => {
           console.log(data);
           this.users = data.users;
@@ -78,8 +79,9 @@ export class PersonalComponent implements OnInit {
     } 
   }
   
-  clickUser(userId: string) {
+  clickUser(userId: string, chatSessionId: number) {
     this.userSeleted = userId;
+    this.chatSessionSelected = chatSessionId;
     console.log(userId);
   }
 }

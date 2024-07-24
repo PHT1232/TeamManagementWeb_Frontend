@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Window } from '@popperjs/core';
+import { ChatMessageDisplay } from 'src/services/models/ChatModels/ChatMessageDisplay';
 import { ChatMessageModel } from 'src/services/models/ChatModels/ChatMessageModel';
 import { SignalrService } from 'src/services/SignalrService';
 import { UserChatService } from 'src/services/UserChatService';
@@ -12,12 +13,15 @@ import { UserChatService } from 'src/services/UserChatService';
 export class ChatComponent {
   
   @Input() selectedUser: string = "";
+  @Input() selectedSession: number = 0;
 
   height: number = 100;
 
   value: string = "";
 
   chatMessage: ChatMessageModel = new ChatMessageModel();
+
+  chatDisplay: ChatMessageDisplay[] = [];
 
   isEmojiPickerVisible!: boolean;
 
@@ -27,6 +31,14 @@ export class ChatComponent {
         this.signalService.startConnection();
         this.signalService.messageListener();
         this.signalService.addConnectedUserListener();
+        this.userChatService.getRecentChatMessage(this.selectedSession, new Date()).subscribe({
+            next: (data) => {
+                this.chatDisplay = data.chats;
+            },
+            error: () => {
+
+            }
+        });
       }
 
   addEmoji(event: any) {
