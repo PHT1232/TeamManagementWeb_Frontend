@@ -18,8 +18,8 @@ export class UserChatService {
     ){
     }
 
-    searchUsers(searchValues: string) {
-        let localUrl = userChatServiceUrl + "/SearchUsers?searchValues=" + searchValues;
+    searchUsers(searchWho: string, whoSearch: string) {
+        let localUrl = userChatServiceUrl + "/SearchUsers?searchWho=" + searchWho + "&whoSearch=" + whoSearch;
         return this.http.get<UserDisplay[]>(localUrl, {
             context: new HttpContext().set(SkipLoading, true),
         });
@@ -30,7 +30,7 @@ export class UserChatService {
         return this.http.get<UserDisplayPagination>(localUrl); 
     }
 
-    getRecentChatMessage(chatSessionId: number, lastMessageSentDate: Date) {
+    getRecentChatMessage(chatSessionId: number, lastMessageSentDate: string) {
         let localUrl = userChatServiceUrl + "/GetRecentChatMessage?chatSessionId=" + chatSessionId + "&lastMessageSentDate=" + lastMessageSentDate;
         return this.http.get<ChatMessageDisplayPagination>(localUrl);
     }

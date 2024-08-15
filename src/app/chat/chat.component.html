@@ -1,15 +1,33 @@
   <div class="chat" [style.height.%]="height">
     <div class="contact bar">
-      <div class="pic stark" style="display: inline-block;"></div>
-      <h2 style="position: relative; bottom: 50px; margin-left:  80px;">Tony stark</h2>
+      <img [src]="'https://192.168.1.10:7279/api/file/GetUserProfile?user=' + selectedUser.userId + '&fileName=' + selectedUser.userProfile" alt="profile" class="pic" style="display: inline-block;">
+      <h2 style="position: relative; bottom: 50px; margin-left:  80px;">{{ selectedUser.userName }}</h2>
     </div>
-    <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
+    <!-- <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
       <div class="time">
         {{ chat.createdDate }}
-        <!-- Today at 11:41 -->
       </div>
       <div class="message parker">
         {{ chat.chatMessage }}
+        Hey, man! What's up, Mr Stark? 👋
+      </div>
+      <div class="message stark">
+        Kid, where'd you come from? 
+      </div>
+      <div class="message parker">
+        Field trip!
+      </div>
+      <div class="message stark">
+        <div class="typing typing-1"></div>
+        <div class="typing typing-2"></div>
+        <div class="typing typing-3"></div>
+      </div>
+    </div> -->
+    <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
+      <div class="time">
+        Today at 11:41
+      </div>
+      <div class="message parker">
         Hey, man! What's up, Mr Stark? 👋
       </div>
       <div class="message stark">
