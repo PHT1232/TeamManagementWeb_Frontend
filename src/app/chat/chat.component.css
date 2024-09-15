@@ -37,7 +37,7 @@
   flex-direction: column;
   justify-content: space-between;
   /* height: 100%;  for big computer*/
-  /* height: 97%; for small computer*/
+  /* height: 97%;  */
   z-index: 2;
   box-sizing: border-box;
   /* border-radius: 1rem; */

@@ -32,6 +32,7 @@ export class ChatComponent {
         this.signalService.startConnection();
         this.signalService.messageListener();
         this.signalService.addConnectedUserListener();
+        console.log('width: ' + window.innerHeight)
       }
 
   addEmoji(event: any) {

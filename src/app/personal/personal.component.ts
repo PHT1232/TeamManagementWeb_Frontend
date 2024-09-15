@@ -17,6 +17,8 @@ export class PersonalComponent implements OnInit {
 
   value: string = '';
 
+  height: number = 95;
+
   userSeleted: UserDisplay = new UserDisplay();
   chatSessionSelected: number = 0;
 
@@ -25,6 +27,11 @@ export class PersonalComponent implements OnInit {
   constructor(private userChatService: UserChatService) {}
 
   ngOnInit(): void {
+    if (window.innerHeight >= 1200) {
+      this.height = 95;
+    } else {
+      this.height = 90;
+    }
 
     this.tooltipItems = [
       {
