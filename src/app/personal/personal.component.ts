@@ -1,3 +1,4 @@
+import { AppComponent } from 'src/app/app.component';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Observable, Subject } from 'rxjs';
@@ -24,7 +25,9 @@ export class PersonalComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput!: ElementRef;
 
-  constructor(private userChatService: UserChatService) {}
+  constructor(private userChatService: UserChatService,
+              private appMain: AppComponent
+  ) {}
 
   ngOnInit(): void {
     if (window.innerHeight >= 1200) {
@@ -61,8 +64,10 @@ export class PersonalComponent implements OnInit {
           this.users = data.users;
           this.loading = false;
         },
-        error: () => {
+        error: (errorRes) => {
           this.loading = false;
+          // var jsonError = JSON.parse(errorRes.error);
+          console.log("error", errorRes.error.title);
         }
       })
     }
@@ -74,7 +79,7 @@ export class PersonalComponent implements OnInit {
       this.userChatService.searchUsers(this.value, this.currentUser).subscribe({
         next: (data) => {
           console.log(data);
-          this.users = data;          
+          this.users = data;
           this.loading = false;
         },
         error: () => {
@@ -82,10 +87,10 @@ export class PersonalComponent implements OnInit {
         }
       })
       await delay(100);
-      this.searchInput.nativeElement.focus();   
-    } 
+      this.searchInput.nativeElement.focus();
+    }
   }
-  
+
   clickUser(user: UserDisplay) {
     this.userSeleted = user;
   }

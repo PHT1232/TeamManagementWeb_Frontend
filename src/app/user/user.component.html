@@ -17,10 +17,10 @@
             <td>
                 <p-tableCheckbox [value]="data"></p-tableCheckbox>
             </td>
-            
+
             <td>
                 <div class="profile-card">
-                    <img [src]="'https://192.168.1.14:7279/api/file/GetUserProfile?user=' + data.userId + '&fileName=' + data.userProfile" class="avatar" />
+                    <img [src]="'https://192.168.1.13:7279/api/file/GetUserProfile?user=' + data.userId + '&fileName=' + data.userProfile" class="avatar" />
                     <div class="user-info">
                         <h1>{{data.userName}}</h1>
                         <p>{{data.email}}</p>

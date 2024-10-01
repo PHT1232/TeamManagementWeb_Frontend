@@ -17,7 +17,7 @@
                         <input [disabled]="true" type="text" pInputText [(ngModel)]="value" style="width: 100%;"/>
                     </span>
                 </ng-template> -->
-                
+
                 <!-- <ng-template #notLoading> -->
                     <span class="p-input-icon-left" style="width: 90%;">
                         <ng-template [ngIf]="loading" [ngIfElse]="notLoading">
@@ -36,7 +36,8 @@
                 <div class="col-sm-4">
                     <!-- <div class="letterblock">
                     </div> -->
-                    <img [src]="'https://192.168.1.10:7279/api/file/GetUserProfile?user=' + user.userId + '&fileName=' + user.userProfile" class="avatar" />
+                    <!-- <img [src]="'https://192.168.1.13:7279/api/file/GetUserProfile?user=' + user.userId + '&fileName=' + user.userProfile" class="avatar" /> -->
+                    <img [src]="'https://192.168.1.13:7279/api/file/GetUserProfile?user=' + user.userId + '&fileName=' + user.userProfile" class="avatar" />
                     <!-- <img src="" alt=""> -->
                 </div>
                 <div class="col-sm-8" style="margin-top: 20px;">
