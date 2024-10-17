@@ -1,7 +1,6 @@
+import { ChatMessageModel } from './ChatMessageModel';
+
 export class ChatMessageDisplay {
-    id!: number;
-    sentUserId!: string;
-    chatMessage!: string;
-    createdDate!: Date;
-    isRead: boolean = false;
+  chatDate!: Date;
+  listOfChatMessage!: ChatMessageModel[];
 }

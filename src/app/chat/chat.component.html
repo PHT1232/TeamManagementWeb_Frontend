@@ -1,6 +1,6 @@
   <div class="chat" [style.height.%]="height">
     <div class="contact bar">
-      <img [src]="'https://192.168.1.13:7279/api/file/GetUserProfile?user=' + selectedUser.userId + '&fileName=' + selectedUser.userProfile" alt="profile" class="pic" style="display: inline-block;">
+      <img [src]="'https://192.168.0.3:7279/api/file/GetUserProfile?user=' + selectedUser.userId + '&fileName=' + selectedUser.userProfile" alt="profile" class="pic" style="display: inline-block;">
       <h2 style="position: relative; bottom: 50px; margin-left:  80px;">{{ selectedUser.userName }}</h2>
     </div>
     <!-- <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
@@ -23,21 +23,24 @@
         <div class="typing typing-3"></div>
       </div>
     </div> -->
-    <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
-      <div class="time">
-        Today at 11:41
+    <div class="messages" id="chat">
+      <div *ngFor="let chatDisplay of signalService.chatDisplay">
+          <div class="time">
+            {{ chatDisplay.chatDate | date: "medium" }}
+          </div>
+          <div *ngFor="let chat of chatDisplay.listOfChatMessage">
+            <ng-template [ngIf]="chat.sentUserId === selectedUser.userId" [ngIfElse]="myMessages">
+              <div class="message stark">
+                {{chat.chatMessage}}
+              </div>
+            </ng-template>
+            <ng-template #myMessages>
+              <div class="message parker">
+                {{chat.chatMessage}}
+              </div>
+            </ng-template>
+          </div>
       </div>
-      <ng-template [ngIf]="chat.sentUserId === selectedUser.userId" [ngIfElse]="myMessages">
-        <div class="message stark">
-          {{chat.chatMessage}}
-        </div>
-      </ng-template>
-      <ng-template #myMessages>
-        <div class="message parker">
-          {{chat.chatMessage}}
-        </div>
-      </ng-template>
-
 
       <!-- <div class="message parker">
         Field trip!

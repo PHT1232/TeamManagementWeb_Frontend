@@ -1,6 +1,7 @@
 export class ChatMessageModel {
-    chatSessionId!: number;
-    sentId!: string;
-    receivedId!: string;
-    message!: string;
+  id!: number;
+  sentUserId!: string;
+  chatMessage!: string;
+  createdDate!: Date;
+  isRead: boolean = false;
 }

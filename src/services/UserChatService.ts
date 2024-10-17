@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/shared/environment";
 import { UserDisplay } from "./models/Users/UserDisplay";
 import { SkipLoading } from "./LoadingInterceptor";
-import { ChatMessageModel } from "./models/ChatModels/ChatMessageModel";
+import { ChatMessageInsertModel } from "./models/ChatModels/ChatMessageInsertModel";
 import { UserDisplayPagination } from "./models/Users/UserDisplayPagination";
 import { ChatMessageDisplayPagination } from "./models/ChatModels/ChatMessageDisplayPagination";
 
@@ -12,7 +12,7 @@ const userChatServiceUrl = environment.baseUrl + '/user/chat'
     providedIn: 'root',
 })
 export class UserChatService {
-    
+
     constructor(
         private http: HttpClient
     ){
@@ -27,7 +27,7 @@ export class UserChatService {
 
     getRecentChatUser(userId: string, lastChatSessionId: number) {
         let localUrl = userChatServiceUrl + "/GetRecentChatUser?userId=" + userId + "&lastChatSessionId=" + lastChatSessionId;
-        return this.http.get<UserDisplayPagination>(localUrl); 
+        return this.http.get<UserDisplayPagination>(localUrl);
     }
 
     getRecentChatMessage(chatSessionId: number, lastMessageSentDate: string) {
@@ -35,7 +35,7 @@ export class UserChatService {
         return this.http.get<ChatMessageDisplayPagination>(localUrl);
     }
 
-    sendMessages(chatMessage: ChatMessageModel) {
+    sendMessages(chatMessage: ChatMessageInsertModel) {
         let localUrl = userChatServiceUrl + '/SendMessage';
         return this.http.post(localUrl, chatMessage);
     }

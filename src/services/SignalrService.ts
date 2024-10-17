@@ -2,12 +2,16 @@ import { Injectable } from "@angular/core";
 import * as signalR from "@microsoft/signalr"
 import { environment } from "src/shared/environment";
 import { ChatMessageDisplay } from "./models/ChatModels/ChatMessageDisplay";
+import { UserChatService } from "./UserChatService";
+import { UserDisplay } from "./models/Users/UserDisplay";
+import { AppComponent } from "src/app/app.component";
+import { ChatMessageModel } from "./models/ChatModels/ChatMessageModel";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SignalrService {
-    public chatMessage: ChatMessageDisplay = new ChatMessageDisplay();
+    public chatDisplay: ChatMessageDisplay[] = [];
     private hubConnection!: signalR.HubConnection;
 
     public startConnection = () => {
@@ -28,12 +32,16 @@ export class SignalrService {
     }
 
     public messageListener = () => {
-        this.hubConnection.on('MessageListener', (user: string, message: string) => {
-            console.log(user);
-            console.log(message);
-            this.chatMessage.sentUserId = user;
-            this.chatMessage.chatMessage = message;
-        });
+        this.hubConnection.on('MessageListener', (chatMessageModel: ChatMessageModel) => {
+            console.log("Hub chatMessageModel: " + chatMessageModel);
+            if (chatMessageModel !== undefined) {
+              let localChatDisplay = new ChatMessageDisplay();
+              localChatDisplay.chatDate = chatMessageModel.createdDate;
+              localChatDisplay.listOfChatMessage.push(chatMessageModel);
+
+              this.chatDisplay.push(localChatDisplay);
+            }
+          });
     }
 
     public addConnectedUserListener = () => {

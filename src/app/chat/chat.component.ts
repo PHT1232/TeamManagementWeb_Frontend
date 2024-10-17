@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Window } from '@popperjs/core';
 import { ChatMessageDisplay } from 'src/services/models/ChatModels/ChatMessageDisplay';
-import { ChatMessageModel } from 'src/services/models/ChatModels/ChatMessageModel';
+import { ChatMessageInsertModel } from 'src/services/models/ChatModels/ChatMessageInsertModel';
 import { UserDisplay } from 'src/services/models/Users/UserDisplay';
 import { SignalrService } from 'src/services/SignalrService';
 import { UserChatService } from 'src/services/UserChatService';
@@ -19,15 +19,15 @@ export class ChatComponent {
 
   value: string = "";
 
-  chatMessage: ChatMessageModel = new ChatMessageModel();
+  chatMessage: ChatMessageInsertModel = new ChatMessageInsertModel();
 
-  chatDisplay: ChatMessageDisplay[] = [];
+  // chatDisplay: ChatMessageDisplay[] = [];
 
   isEmojiPickerVisible!: boolean;
 
-  constructor (private signalService: SignalrService
-              , private userChatService: UserChatService    
-              , private appMain: AppComponent) 
+  constructor (public signalService: SignalrService
+              , private userChatService: UserChatService
+              , private appMain: AppComponent)
       {
         this.signalService.startConnection();
         this.signalService.messageListener();
@@ -43,17 +43,10 @@ export class ChatComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.selectedUser.chatSessionId);
+    console.log("chat session id: " + this.selectedUser.chatSessionId);
     if (this.selectedUser.chatSessionId !== undefined) {
-      var yourDate = new Date();
-      this.userChatService.getRecentChatMessage(this.selectedUser.chatSessionId, yourDate.toLocaleString()).subscribe({
-        next: (data) => {
-            this.chatDisplay = data.chats;
-        },
-        error: (errorRes) => {
-          this.appMain.showMessage('error', errorRes.error.title);
-        }
-      });
+      this.getRecentChatMessage(this.selectedUser);
+
     }
   }
 
@@ -61,7 +54,7 @@ export class ChatComponent {
     let userId = localStorage.getItem('userId');
 
     if (userId !== null) {
-      this.chatMessage.chatSessionId = 0;
+      this.chatMessage.chatSessionId = this.selectedUser.chatSessionId;
       this.chatMessage.sentId = userId;
       this.chatMessage.receivedId = this.selectedUser.userId;
       this.chatMessage.message = this.value;
@@ -71,7 +64,7 @@ export class ChatComponent {
       next: () => {
         console.log("lol")
       },
-      error: (errorRes) => {        
+      error: (errorRes) => {
         console.log("lal")
       }
     });
@@ -84,5 +77,17 @@ export class ChatComponent {
       this.height = 65;
     }
     this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
+  }
+
+
+  getRecentChatMessage = (selectedUser: UserDisplay) => {
+    var yourDate = new Date();
+    this.userChatService.getRecentChatMessage(selectedUser.chatSessionId, yourDate.toLocaleString()).subscribe({
+      next: (data) => {
+          this.signalService.chatDisplay = data.chats;
+      },
+      error: (errorRes) => {
+      }
+    });
   }
 }
