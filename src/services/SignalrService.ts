@@ -33,15 +33,30 @@ export class SignalrService {
 
     public messageListener = () => {
         this.hubConnection.on('MessageListener', (chatMessageModel: ChatMessageModel) => {
-            console.log("Hub chatMessageModel: " + chatMessageModel);
             if (chatMessageModel !== undefined) {
-              let localChatDisplay = new ChatMessageDisplay();
-              localChatDisplay.chatDate = chatMessageModel.createdDate;
-              localChatDisplay.listOfChatMessage.push(chatMessageModel);
-
-              this.chatDisplay.push(localChatDisplay);
+              this.addNewMessageToChatDisplayList(chatMessageModel);
             }
           });
+    }
+
+    public addNewMessageToChatDisplayList(chatMessageModel: ChatMessageModel) {
+      let chatMessesageModelHour = new Date(chatMessageModel.createdDate);
+      let chatDisplayHour = new Date(this.chatDisplay[this.chatDisplay.length-1].chatDate);
+
+      let hourBetweenChat = chatMessesageModelHour.getMinutes() - chatDisplayHour.getMinutes();
+      let dayBetweenChat = chatMessesageModelHour.getDay() - chatDisplayHour.getDay();
+
+      if(hourBetweenChat < 1 && dayBetweenChat <= 1) {
+        this.chatDisplay[this.chatDisplay.length-1].listOfChatMessage.push(chatMessageModel);
+      } else {
+        let hubMessageListenerChatDisplay = new ChatMessageDisplay();
+        hubMessageListenerChatDisplay.listOfChatMessage = [];
+
+        hubMessageListenerChatDisplay.chatDate = chatMessageModel.createdDate;
+        hubMessageListenerChatDisplay.listOfChatMessage.push(chatMessageModel);
+
+        this.chatDisplay.push(hubMessageListenerChatDisplay);
+      }
     }
 
     public addConnectedUserListener = () => {

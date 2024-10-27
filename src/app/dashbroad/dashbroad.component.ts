@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ChildrenOutletContexts } from '@angular/router';
+import { SignalrService } from 'src/services/SignalrService';
 
 @Component({
   selector: 'app-dashbroad',
@@ -12,9 +13,12 @@ export class DashbroadComponent {
   opened: boolean = true;
   title = 'FinancialManagementWeb_Frontend';
   currentRoute!: string;
-  
-  constructor(public location: Location, private contexts: ChildrenOutletContexts)
+
+  constructor(public location: Location, private contexts: ChildrenOutletContexts, public signalService: SignalrService)
   {
+    this.signalService.startConnection();
+    this.signalService.messageListener();
+    this.signalService.addConnectedUserListener();
   }
 
   getCurrentUrl(): string {

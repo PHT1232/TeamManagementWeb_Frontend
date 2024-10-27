@@ -46,7 +46,7 @@
 }
 
 .chat .contact.bar {
-height: 63px;
+  height: 63px;
   flex-basis: 3.5rem;
   flex-shrink: 0;
   margin: 1rem;
@@ -88,11 +88,18 @@ height: 63px;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
 }
 
-.chat .messages .message.parker {
+.chat .messages .message.mymessages {
   margin: 1rem 1rem 1rem auto;
   border-radius: 1.125rem 1.125rem 0 1.125rem;
   background: #333;
   color: white;
+}
+
+.sendingText {
+  font-size: 10pt;
+  float: right;
+  margin: -0.5rem 1rem 1rem auto;
+  color: gray;
 }
 
 .chat .messages .message .typing {
@@ -179,20 +186,4 @@ height: 63px;
     transform: translate(0, -0.25rem) scale(1);
     opacity: 1;
   }
-}
-
-.pic.banner {
-  background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/4/4f/BruceHulk-Endgame-TravelingCapInPast.jpg");
-}
-
-.pic.thor {
-  background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/9/98/ThorFliesThroughTheAnus.jpg");
-}
-
-.pic.danvers {
-  background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/0/05/HeyPeterParker.png");
-}
-
-.pic.rogers {
-  background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/7/7c/Cap.America_%28We_Don%27t_Trade_Lives_Vision%29.png");
 }

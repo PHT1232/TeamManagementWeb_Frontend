@@ -6,6 +6,7 @@ import { SkipLoading } from "./LoadingInterceptor";
 import { ChatMessageInsertModel } from "./models/ChatModels/ChatMessageInsertModel";
 import { UserDisplayPagination } from "./models/Users/UserDisplayPagination";
 import { ChatMessageDisplayPagination } from "./models/ChatModels/ChatMessageDisplayPagination";
+import { ChatMessageModel } from "./models/ChatModels/ChatMessageModel";
 
 const userChatServiceUrl = environment.baseUrl + '/user/chat'
 @Injectable({
@@ -37,6 +38,8 @@ export class UserChatService {
 
     sendMessages(chatMessage: ChatMessageInsertModel) {
         let localUrl = userChatServiceUrl + '/SendMessage';
-        return this.http.post(localUrl, chatMessage);
+        return this.http.post<ChatMessageModel>(localUrl, chatMessage, {
+          context: new HttpContext().set(SkipLoading, true),
+        });
     }
 }
