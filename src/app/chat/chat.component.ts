@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Window } from '@popperjs/core';
 import { ChatMessageDisplay } from 'src/services/models/ChatModels/ChatMessageDisplay';
 import { ChatMessageInsertModel } from 'src/services/models/ChatModels/ChatMessageInsertModel';
@@ -16,9 +16,26 @@ import { ChatMessageModel } from 'src/services/models/ChatModels/ChatMessageMode
 export class ChatComponent implements OnInit {
   @Input() selectedUser: UserDisplay = new UserDisplay();
 
+  onScroll(el: HTMLElement): void {
+    console.log("innerheight: " + this.chatTemplate.nativeElement.offsetHeight);
+    console.log("windowY: " + this.chatTemplate.nativeElement.scrollTop);
+    let scrollTop = this.chatTemplate.nativeElement.scrollTop;
+    if (scrollTop === 0) {
+      for (let i = 0; i < 5; i++) {
+        this.signalService.chatDisplay.push(this.chatDisplay[i]);
+      }
+      this.scrollTop += 20;
+    }
+    // this.first.nativeElement.scrollIntoView({behavior: 'smooth'});
+
+    // el.scrollIntoView({behavior: 'smooth'});
+  }
+
   @ViewChild('chatTemplate') chatTemplate!: ElementRef;
 
-  scrollTop!: number;
+  @ViewChild('first') first!: ElementRef;
+
+  scrollTop!: any;
 
   height: number = 100;
 
@@ -30,11 +47,15 @@ export class ChatComponent implements OnInit {
 
   isEmojiPickerVisible!: boolean;
 
+  chatDisplay: ChatMessageDisplay[] = [];
+
   constructor (public signalService: SignalrService
               , private userChatService: UserChatService
-              , private appMain: AppComponent)
+              , private appMain: AppComponent
+              , private cdref: ChangeDetectorRef)
       {
-        console.log('width: ' + window.innerHeight)
+        console.log('width: ' + window.innerHeight);
+        // console.log("windowY: " + this.chatTemplate.nativeElement.scrollTop);
       }
 
   ngOnInit(): void {
@@ -52,8 +73,15 @@ export class ChatComponent implements OnInit {
     console.log("chat session id: " + this.selectedUser.chatSessionId);
     if (this.selectedUser.chatSessionId !== undefined) {
       this.getRecentChatMessage(this.selectedUser);
-      this.scrollTop = this.chatTemplate.nativeElement.offsetHeight;
+      console.log("scrollHeight: " + this.chatTemplate.nativeElement.scrollHeight);
     }
+  }
+
+  ngAfterContentChecked(changes: SimpleChanges) {
+    if (this.first !== undefined && this.selectedUser.chatSessionId !== undefined) {
+      this.first.nativeElement.scrollIntoView({behavior: 'smooth'});
+    }
+    // this.cdref.detectChanges();
   }
 
   sendMessage() {
@@ -97,7 +125,11 @@ export class ChatComponent implements OnInit {
     var yourDate = new Date();
     this.userChatService.getRecentChatMessage(selectedUser.chatSessionId, yourDate.toLocaleString()).subscribe({
       next: (data) => {
-          this.signalService.chatDisplay = data.chats;
+          // this.signalService.chatDisplay = data.chats;
+          this.chatDisplay = data.chats;
+          for (let i = 0; i < 5; i++) {
+            this.signalService.chatDisplay.push(this.chatDisplay[i]);
+          }
       },
       error: (errorRes) => {
       }

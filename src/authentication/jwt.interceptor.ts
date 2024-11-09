@@ -2,12 +2,17 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/c
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { AuthenticationService } from "src/services/AuthenticationService";
+import { EncryptionService } from "src/services/EncryptionService";
 import { environment } from "src/shared/environment";
 
-const apiUrl = 'https://192.168.1.14:7279/api/'
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private authenService: AuthenticationService) {}
+    constructor(private authenService: AuthenticationService, private encryptionService: EncryptionService) {}
+
+    ExcludeUrlList = [
+      environment.baseUrl + "/api/Common/commonFileuploaddata",
+      environment.baseUrl + "/api/Users/UploadProfilePicture",
+      environment.baseUrl + "/api/Common/downloadattachedfile"];
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');

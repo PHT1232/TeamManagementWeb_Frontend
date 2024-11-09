@@ -1,6 +1,6 @@
   <div class="chat" [style.height.%]="height">
     <div class="contact bar">
-      <img [src]="'https://192.168.1.4:7279/api/file/GetUserProfile?user=' + selectedUser.userId + '&fileName=' + selectedUser.userProfile" alt="profile" class="pic" style="display: inline-block;">
+      <img [src]="'https://192.168.1.9:7279/api/file/GetUserProfile?user=' + selectedUser.userId + '&fileName=' + selectedUser.userProfile" alt="profile" class="pic" style="display: inline-block;">
       <h2 style="position: relative; bottom: 50px; margin-left:  80px;">{{ selectedUser.userName }}</h2>
     </div>
     <!-- <div class="messages" id="chat" *ngFor="let chat of chatDisplay">
@@ -23,7 +23,7 @@
         <div class="typing typing-3"></div>
       </div>
     </div> -->
-    <div #chatTemplate class="messages" id="chat" [scrollTop]="chatTemplate.scrollHeight">
+    <div #chatTemplate class="messages" id="chat" (scroll)="onScroll(first)">
       <div *ngFor="let chatDisplay of signalService.chatDisplay">
           <div class="time">
               {{ chatDisplay.chatDate | date: "medium" }}
@@ -63,9 +63,11 @@
         <div class="typing typing-2"></div>
         <div class="typing typing-3"></div>
       </div>
+      <div #first></div>
     </div>
     <div class="input">
-        <i class="fas fa-camera"></i><i (click)="openEmojimart()" class="far fa-laugh-beam"></i><input (keydown.enter)="sendMessage()" [(ngModel)]="value" placeholder="Type your message here!" type="text" /><i (click)="sendMessage()" class="pi pi-send"></i>
+        <!-- <i class="fas fa-camera"></i><i (click)="openEmojimart()" class="far fa-laugh-beam"></i><input (keydown.enter)="sendMessage()" [(ngModel)]="value" placeholder="Type your message here!" type="text" /><i (click)="sendMessage()" class="pi pi-send"></i> -->
+        <i class="fas fa-camera"></i><i (click)="openEmojimart()" class="far fa-laugh-beam"></i><input (keydown.enter)="sendMessage()" [(ngModel)]="value" placeholder="Type your message here!" type="text" /><i (click)="onScroll(first)" class="pi pi-send"></i>
     </div>
 </div>
 <emoji-mart

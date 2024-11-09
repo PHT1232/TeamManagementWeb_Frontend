@@ -4,5 +4,6 @@ export class UserDisplay {
     chatSessionId!: number;
     userName!: string;
     userProfile!: string;
+    lastMessasgeSentOrRecived!: string;
     role!: string;
 }

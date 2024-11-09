@@ -70,6 +70,7 @@ import { JoinTeamsComponent } from './teams/join-teams/join-teams.component';
 import { UploadComponent } from './tests/upload/upload.component';
 import { JwtInterceptor } from 'src/authentication/jwt.interceptor';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EncryptionInterceptor } from 'src/services/EncryptionInterceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -129,7 +130,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["192.168.1.14:7279"],
+        allowedDomains: ["192.168.1.15:7279"],
         disallowedRoutes: []
       }
     }),
@@ -141,7 +142,7 @@ export function tokenGetter() {
     ConfirmDialogModule,
     NgxDropzoneModule,
     TagModule,
-    PickerModule
+    PickerModule,
   ],
   providers: [
     DialogService,
@@ -156,7 +157,12 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EncryptionInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

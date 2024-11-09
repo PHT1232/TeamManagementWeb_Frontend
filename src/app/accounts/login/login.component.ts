@@ -15,22 +15,22 @@ export class LoginComponent {
   showError: boolean = false;
   loading: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private route: Router, private authenService: AuthenticationService) 
+  constructor(private activatedRoute: ActivatedRoute, private route: Router, private authenService: AuthenticationService)
   {
   }
 
   loginFn() {
     let returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'];
     this.loading = true;
-    
+
     this.authenService.login(this.emailOrUsername, this.password).subscribe({
-      next: (token) => { 
+      next: (token) => {
         this.loading = false;
         localStorage.setItem('token', token.token);
         localStorage.setItem('userId', token.userId);
 
         if (returnUrl === undefined || returnUrl === '' || returnUrl === '/account/login') {
-          this.route.navigate(['app/teams']);       
+          this.route.navigate(['app/teams']);
         } else {
           this.route.navigate([returnUrl]);
         }
@@ -45,7 +45,7 @@ export class LoginComponent {
         } else {
           this.errorMessage = 'Xảy ra lỗi khi kết nối đến server ' + errorRes;
         }
-        
+
         this.loading = false;
         this.showError = true;
       }
@@ -55,7 +55,7 @@ export class LoginComponent {
   isFormValid() {
     if (this.emailOrUsername === undefined || this.emailOrUsername === '') {
       return false;
-    } 
+    }
 
     if (this.password === undefined || this.password === '') {
       return false;
